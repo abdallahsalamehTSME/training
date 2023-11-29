@@ -22,7 +22,7 @@ class AppService extends AppServiceBase implements IAppService {
     this.application = new Application({ config, state } as Partial<TApplication>)
   }
 
-  public formModalAsync(props: Partial<TDefaultFormModalDelegateProps> = {}): TModalManagerAction<'formModal'> {
+  public openFormModalAsync(props: Partial<TDefaultFormModalDelegateProps> = {}): TModalManagerAction<'formModal'> {
     return new Promise(async resolve => {
       const { next, ...result } = await this.ModalManager.open({ type: 'formModal', ...props })
       next()

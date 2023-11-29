@@ -25,7 +25,6 @@ const defaultFormModalDelegateProps = {
   isDrawer: false,
   isCentered: true,
   isStatic: true,
-  isVisible: false,
   i18n: {},
   userName: ''
 }

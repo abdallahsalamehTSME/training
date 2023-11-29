@@ -1,10 +1,10 @@
 <template>
-  <v-modal v-model="isVisible" :centered="isCentered" :static="isStatic" :drawer="isDrawer" @dismiss="cancel">
+  <v-modal :modelValue="isVisible" :centered="isCentered" :static="isStatic" :drawer="isDrawer" @dismiss="cancel">
     <template #header>
       <h5 class="my-2">modal manager test</h5>
     </template>
     <template #body>
-      <transition name="fade" mode="out-in" appear>
+      <div>
         <v-async v-model="asyncModel" :promise="userService.getUserAsync">
           <template #busy>
             <div class="d-flex justify-content-center">
@@ -57,7 +57,7 @@
             </div>
           </template>
         </v-async>
-      </transition>
+      </div>
     </template>
     <template #footer>
       <!-- :disabled="!userService.dc.isDirty.value" -->
@@ -83,7 +83,7 @@ import { ValidationStateEnum } from '../../presentation/components/meta/validati
 
 const props = defineProps(formModalProps)
 const userService = IoC.DI().resolve<IUserService>(serviceMap.myUserService.key)
-const isVisible = toRef(props, 'isVisible')
+// const isVisible = toRef(props, 'isVisible')
 const cancel = toRef(props, 'cancel')
 const yes = toRef(props, 'yes')
 const asyncModel = ref(false)
