@@ -13,7 +13,7 @@ const props = {
     }
   },
   cancel: {
-    type: Function as PropType<() => Promise<any>>,
+    type: Function as PropType<() => Promise<unknown>>,
     default() {
       return () => Promise.resolve()
     }
@@ -26,7 +26,10 @@ const defaultFormModalDelegateProps = {
   isCentered: true,
   isStatic: true,
   i18n: {},
-  userName: ''
+  userName: '',
+  yes: {
+    type: () => Promise<any>
+  }
 }
 
 type TDefaultFormModalDelegateProps = Partial<typeof defaultFormModalDelegateProps>

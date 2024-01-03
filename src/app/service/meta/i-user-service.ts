@@ -12,7 +12,7 @@ type validations = {
 
 interface IUserService extends ICubesInjectable {
   dc: DataController<UserDc>
-  createUser(): any
+  createUser(): () => Promise<any>
   validations: validations
 
   getUsersAsync(): Function

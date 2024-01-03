@@ -10,7 +10,7 @@
       </template>
 
       <template #ready="{ result: { success, fail } }">
-        <div v-if="success">
+        <div v-if="success" class="mb-3">
           <v-row>
             <v-col>
               <v-input
@@ -46,7 +46,7 @@
               />
             </v-col>
           </v-row>
-          <div class="d-flex justify-content-end py-3">
+          <div v-if="hasSaveCancel" class="d-flex justify-content-end py-3">
             <v-button
               accent="default"
               @click="appService.dc.rollback(), (appService.validations.states.name = ValidationStateEnum.unset), (appService.validations.states.email = ValidationStateEnum.unset)"
@@ -72,7 +72,9 @@ import { IoC } from 'cubes'
 import { serviceMap } from '@/service'
 import { ValidationStateEnum } from './meta/validation'
 import { IUserService } from '@/app/service/meta/i-user-service'
+import { props as userFormProps } from './def/user-form'
 const appService = IoC.DI().resolve<IUserService>(serviceMap.myUserService.key)
 const emit = defineEmits(['saved'])
+defineProps(userFormProps)
 const asyncModel = ref(false)
 </script>

@@ -1,6 +1,6 @@
 import { DataController, ValidationStateEnum } from 'cubes-ui'
 import { IUserService } from '../meta/i-user-service'
-import { Inject, Service, regularExpressions } from 'cubes'
+import { Inject, Service, Singleton, regularExpressions } from 'cubes'
 import { IoCLevelsEnum } from '@/control'
 import { serviceMap } from '@/service'
 import { IUserRepository } from '@/app/repository/meta/i-user-repo'
@@ -13,6 +13,7 @@ type validations = {
 }
 
 @Service(IoCLevelsEnum.DEFAULT_0, serviceMap.myUserService.key)
+@Singleton
 class MyUserService implements IUserService {
   id: string = '1234534'
 
@@ -25,16 +26,25 @@ class MyUserService implements IUserService {
   })
 
   @Inject() MyUserRepository!: IUserRepository
-
-  createUser(): any {
-    if (this.validateUser()) {
-      //here will be the repository usage
-      this.validations.saved = !this.validations.saved
-      this.dc.model.deserialize({
-        userName: '',
-        userEmail: ''
+  createUser(): () => Promise<any> {
+    return () =>
+      new Promise(async (resolve, reject) => {
+        try {
+          if (this.validateUser()) {
+            //here will be the repository usage
+            this.validations.saved = !this.validations.saved
+            this.dc.model.deserialize({
+              userName: '',
+              userEmail: ''
+            })
+            this.validations.states = { name: ValidationStateEnum.unset, email: ValidationStateEnum.unset }
+            resolve('ok')
+          } else reject('no')
+        } catch (error) {
+          console.log(error)
+          reject('no')
+        }
       })
-    } else console.log('invalid')
   }
 
   validateUser(): boolean {

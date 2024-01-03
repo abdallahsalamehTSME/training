@@ -1,6 +1,7 @@
 const props = {
   userName: String,
-  userEmail: String
+  userEmail: String,
+  hasSaveCancel: { type: Boolean, default: true }
 }
 
 export { props }
